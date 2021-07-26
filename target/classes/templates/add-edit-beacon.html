@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion Balise</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="row sticky-top" style="background-color:white;">
+    <div class="col-sm-6 col-md-5 col-lg-6 sticky-top"  style="width: 100px; height:60px;">
+        <img src="logo2.png"  alt="">
+    </div>
+    <div class="col-sm-6 col-md-5 offset-md-2 col-lg-6 offset-lg-0 sticky-top container-fluid" style="margin-left:0px; width:92.5%; border-right: 0px; margin-right:0px;">
+
+        <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark " style="padding-bottom:25px;">
+
+            <div class="container-fluid">
+
+                <a class="navbar-brand" href="#">Gestion Balise</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/home">Accueil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/home">Balise</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/site">Sites</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="/reservation" tabindex="-1" >Reservations</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="/voyage" tabindex="-1" >Voyage</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="/camion" tabindex="-1" >Camion</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link " th:href="@{/login?logout}">Se deconnecter</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<div class="container my-5">
+    <h3> Add Beacon</h3>
+    <div class="card">
+        <div class="card-body">
+            <div class="col-md-10">
+                <form action="#" th:action="@{/createBalise}" th:object="${balise}" method="post">
+                    <div class="row">
+                        <div class="form-group col-md-8">
+                            <label for="matriculationBalise" class="col-form-label">Matricule</label>
+                            <input type="text" th:field="${balise.matriculationBalise}" class="form-control"
+                                   id="matriculationBalise" placeholder="matricule" />
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="numeroSerie" class="col-form-label">Numero de Serie</label>
+                            <input type="text" th:field="${balise.numeroSerie}" class="form-control"
+                                   id="numeroSerie" placeholder="numero de serie" />
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="nomFlotte" class="col-form-label">Nom Flotte</label>
+                           <!-- <input type="text" th:field="${balise.nomFlotte}" class="form-control"
+                                   id="nomFlotte" placeholder="nom flotte" />-->
+                            <select for="nomFlotte"  th:field="${balise.nomFlotte}" class="form-select" aria-label="Default select example"
+                                    id="nomFlotte">
+                                <option selected value="Douala">Douala</option>
+                                <option value="Limbe">Limbe</option>
+                                <option value="Kribi">Kribi</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="codeFlotte" class="col-form-label">Code Flotte</label>
+                           <!-- <input type="text" th:field="${balise.codeFlotte}" class="form-control"
+                                   id="codeFlotte" placeholder="code flotte" />-->
+                            <select for="codeFlotte"  th:field="${balise.codeFlotte}" class="form-select" aria-label="Default select example"
+                                    id="codeFlotte">
+                                <option selected value="FL02 DOUALA PAD">FL02 DOUALA PAD</option>
+                                <option value="FL01 CAP LIMBOH">FL01 CAP LIMBOH</option>
+                                <option value="FL06 KRIBI PORT VI">FL06 KRIBI PORT VI</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="numeroSim" class="col-form-label">Numero Sim</label>
+                            <input type="text" th:field="${balise.numeroSim}" class="form-control"
+                                   id="numeroSim" placeholder="numero sim" />
+                        </div>
+                        <div class="form-group col-md-8">
+                           <!-- <label for="statut_fonctionel" class="col-form-label">Statut Fonctionel</label>
+                            <input type="text" th:field="${balise.statut_fonctionel}" class="form-control"
+                                   id="statut_fonctionel" placeholder="statut fonctionel" />-->
+                            <label for="statutFonctionel" class="col-form-label">Statut Fonctionel</label>
+                            <select for="statutFonctionel"  th:field="${balise.statutFonctionel}" class="form-select" aria-label="Default select example"
+                                    id="statutFonctionel">
+                                <option selected value="DISPONIBLE">DISPONIBLE</option>
+                                <option value="EN VOYAGE">EN VOYAGE</option>
+                                <option value="EN RRETOUR">EN RRETOUR</option>
+                                <option value="AFFECTE">AFFECTE</option>
+                                <option value="RESERVER">RESERVER</option>
+                            </select>
+                        </div>
+                        <p> </p>
+                        <div class="col-md-6">
+                            <input type="submit" class="btn btn-primary" value=" Enregistrer ">
+                        </div>
+
+                        <input type="hidden" id="id" th:field="${balise.id}">
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
