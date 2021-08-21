@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion Balise</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div class="row sticky-top" style="background-color:white;">
+    <div class="col-sm-6 col-md-5 col-lg-6 sticky-top"  style="width: 100px; height:60px;">
+        <img th:src="@{/logo2.png}"/>
+    </div>
+    <div class="col-sm-6 col-md-5 offset-md-2 col-lg-6 offset-lg-0 sticky-top container-fluid" style="margin-left:0px; width:92.5%; border-right: 0px; margin-right:0px;">
+
+        <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark " style="padding-bottom:25px;">
+
+            <div class="container-fluid">
+
+                <a class="navbar-brand" href="#">Gestion Balise</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/home">Accueil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/home">Balise</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/site">Sites</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="/reservation" tabindex="-1" >Reservations</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="/voyage" tabindex="-1" >Voyage</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="/camion" tabindex="-1" >Camion</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link " th:href="@{/login?logout}">Se deconnecter</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<nav class="navbar navbar-light">
+    <a class="navbar-brand"></a>
+    <p class="my-5">
+        <a href="/edit" class="btn btn-dark" sec:authorize="hasRole('ROLE_ADMIN')">
+            Ajouter Balise</a>
+    </p>
+    <p class="my-5">
+        <a href="/baliseDisponible" class="btn btn-dark" style="margin-left:0.5em;">
+            Balise Disponible</a>
+    </p>
+    <p class="my-5">
+        <a href="/baliseVoyage" class="btn btn-dark" style="margin-left:0.5em;">
+            Balise en Voyage</a>
+    </p>
+    <p class="my-5">
+        <a href="/baliseAffecte" class="btn btn-dark" style="margin-left:0.5em;">
+            Balise Affecte</a>
+    </p>
+    <p class="my-5">
+        <a href="/baliseDouala" class="btn btn-dark" style="margin-left:0.5em;">
+            Balise Douala</a>
+    </p>
+    <p class="my-5">
+        <a href="/baliseLimbe" class="btn btn-dark" style="margin-left:0.5em;">
+            Balise Limbe</a>
+    </p>
+    <p class="my-5">
+        <a href="/baliseKribi" class="btn btn-dark" style="margin-left:0.5em;">
+            Balise Kribi</a>
+    </p>
+    <p class="my-5" style=" margin-left:2em;" >
+        <a href="/home" th:if="${balisesDisponibleTaille > 5}" th:text="safe" class="btn btn-light-green"
+           style="background-color:green; "
+        ></a>
+    </p>
+    <p class="my-5" style="margin-left:2em;">
+        <a href="/home" th:unless="${balisesDisponibleTaille > 5}" th:text="danger" class="btn btn-light-green
+          " style="background-color:red; "></a>
+    </p>
+    <form class="form-inline" th:action="@{/matriculeBalise}">
+        <input class="form-control mr-sm-2" type="search" placeholder="matricule" aria-label="Search" name="matricule"  th:value="${matricule}">
+        <p></p>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">recherche</button>
+    </form>
+</nav>
+<div th:switch="${balise}" class="container my-5">
+
+    <div class="col-md-15">
+        <h2 th:case="null">No record found !!</h2>
+        <div th:case="*">
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Matricule</th>
+                    <th scope="col">Numero de Serie</th>
+                    <th scope="col">Nom Flotte</th>
+                    <th scope="col">Code Flotte</th>
+                    <th scope="col">Numero Sim</th>
+                    <th scope="col">Statut Fonctionel</th>
+                    <th scope="col">Modifier</th>
+                    <th scope="col" sec:authorize="hasRole('ROLE_ADMIN')">Supprimer</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="balise : ${balise}">
+                    <th scope="row" th:text="${balise.id}"></th>
+                    <td th:text="${balise.matriculationBalise}"></td>
+                    <td th:text="${balise.numeroSerie}"></td>
+                    <td th:text="${balise.nomFlotte}"></td>
+                    <td th:text="${balise.codeFlotte}"></td>
+                    <td th:text="${balise.numeroSim}"></td>
+                    <td th:text="${balise.statutFonctionel}"></td>
+                    <td>
+                        <a th:href="@{/edit/{id}(id=${balise.id})}" class="btn btn-dark">
+                            Modifier</a>
+                    </td>
+                    <td sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a th:href="@{/delete/{id}(id=${balise.id})}" class="btn btn-dark">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                            </svg></a>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+
+
+
+            <nav aria-label="Page navigation example" th:if="${totalPages > 1}">
+                <div class="col-sm-2">
+                    Total Rows: [[${totalItems}]]
+                </div>
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" th:if="${currentPage > 0}" th:href="@{'/vol/' + ${currentPage - 1}}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only" th:unless="${currentPage > 0}">Previous</span>
+                        </a>
+                    </li>
+                    <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}">
+                    <a class="page-link" th:if="${currentPage != i}" th:href="@{'/vol/' + ${i}}" th:unless="${currentPage != i}">[[${i}]]</a>
+                </li>
+                </span>
+                    <li class="page-item">
+                        <a class="page-link" th:if="${currentPage < totalPages}" th:href="@{'/vol/' + ${currentPage + 1}}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only" th:unless="${currentPage < totalPages}">Next</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+</body>
+</html>
