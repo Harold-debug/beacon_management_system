@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Beacon Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="row sticky-top" style="background-color:white;">
+    <div class="col-sm-6 col-md-5 col-lg-6 sticky-top"  style="width: 100px; height:60px;">
+        <img src="logo2.png"  alt="">
+    </div>
+    <div class="col-sm-6 col-md-5 offset-md-2 col-lg-6 offset-lg-0 sticky-top container-fluid" style="margin-left:0px; width:92.5%; border-right: 0px; margin-right:0px;">
+
+        <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark " style="padding-bottom:25px;">
+
+            <div class="container-fluid">
+
+                <a class="navbar-brand" href="#">Gestion Balise</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/home">Accueil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/home">Balise</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/site">Sites</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="/reservation" tabindex="-1" >Reservations</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="/voyage" tabindex="-1" >Voyage</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="/camion" tabindex="-1" >Camion</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link " th:href="@{/login?logout}">Se deconnecter</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<div class="container my-5">
+    <h3> </h3>
+    <div class="card">
+        <div class="card-body">
+            <div class="col-md-10">
+                <form action="#" th:action="@{/createBaliseReservation}" th:object="${baliseReservation}" method="post">
+                    <div class="row">
+                        <div class="form-group col-md-8">
+                        <label for="balise" class="col-form-label">Balise Id</label>
+
+                        <select for="balise"    class="form-select" aria-label="Default select example"
+                                id="balise">
+                            <option th:each="balise : ${balise}" th:value="${balise.id}"
+                                    th:text="${balise.matriculationBalise}" ></option>
+                        </select>
+
+                    </div>
+                        <div class="form-group col-md-8">
+                        <label for="reservation" class="col-form-label">Site Id</label>
+
+                        <select for="reservation"   class="form-select" aria-label="Default select example"
+                                id="reservation">
+                            <option th:each="reservation : ${reservation}" th:value="${reservation.id}"
+                                    th:text="${reservation.numeroReservation}" ></option>
+                        </select>
+                    </div>
+
+                        <div class="form-group col-md-8">
+                            <label for="dateSortie" class="col-form-label">Date Sortie</label>
+                            <input type="datetime-local" th:field="${baliseReservation.dateSortie}" class="form-control"
+                                   id="dateSortie" placeholder="date sortie" />
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="dateRetour" class="col-form-label">Date Retour</label>
+                            <input type="datetime-local" th:field="${baliseReservation.dateRetour}" class="form-control"
+                                   id="dateRetour" placeholder="date retour" />
+                        </div>
+                        <p> </p>
+                        <div class="col-md-6">
+                            <input type="submit" class="btn btn-primary" value=" Enregistrer " >
+                        </div>
+
+                        <input type="hidden" id="id" th:field="${baliseReservation.id}">
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
